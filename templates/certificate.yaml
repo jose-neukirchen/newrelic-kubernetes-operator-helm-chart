@@ -1,0 +1,17 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: newrelic-kubernetes-operator-serving-cert
+  namespace: newrelic-kubernetes-operator-system
+  annotations:
+    helm.sh/hook: post-install
+    helm.sh/hook-weight: "94"
+spec:
+  dnsNames:
+  - newrelic-kubernetes-operator-webhook-service.newrelic-kubernetes-operator-system.svc
+  - newrelic-kubernetes-operator-webhook-service.newrelic-kubernetes-operator-system.svc.cluster.local
+  issuerRef:
+    kind: Issuer
+    name: newrelic-kubernetes-operator-selfsigned-issuer
+  secretName: webhook-server-cert

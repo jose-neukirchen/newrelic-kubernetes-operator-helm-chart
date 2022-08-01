@@ -1,0 +1,148 @@
+---
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  annotations:
+    cert-manager.io/inject-ca-from: newrelic-kubernetes-operator-system/newrelic-kubernetes-operator-serving-cert
+  name: newrelic-kubernetes-operator-validating-webhook-configuration
+webhooks:
+- clientConfig:
+    caBundle: Cg==
+    service:
+      name: newrelic-kubernetes-operator-webhook-service
+      namespace: newrelic-kubernetes-operator-system
+      path: /validate-nr-k8s-newrelic-com-v1-alertsapmcondition
+  admissionReviewVersions: ["v1beta1"]
+  failurePolicy: Fail
+  name: valertsapmcondition.kb.io
+  rules:
+  - apiGroups:
+    - nr.k8s.newrelic.com
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - alertsapmconditions
+  sideEffects: None
+- clientConfig:
+    caBundle: Cg==
+    service:
+      name: newrelic-kubernetes-operator-webhook-service
+      namespace: newrelic-kubernetes-operator-system
+      path: /validate-nr-k8s-newrelic-com-v1-alertsnrqlcondition
+  admissionReviewVersions: ["v1beta1"]
+  failurePolicy: Fail
+  name: valertsnrqlcondition.kb.io
+  rules:
+  - apiGroups:
+    - nr.k8s.newrelic.com
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - alertsnrqlconditions
+  sideEffects: None
+- clientConfig:
+    caBundle: Cg==
+    service:
+      name: newrelic-kubernetes-operator-webhook-service
+      namespace: newrelic-kubernetes-operator-system
+      path: /validate-nr-k8s-newrelic-com-v1-alertspolicy
+  admissionReviewVersions: ["v1beta1"]
+  failurePolicy: Fail
+  name: valertspolicy.kb.io
+  rules:
+  - apiGroups:
+    - nr.k8s.newrelic.com
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - alertspolicies
+  sideEffects: None
+- clientConfig:
+    caBundle: Cg==
+    service:
+      name: newrelic-kubernetes-operator-webhook-service
+      namespace: newrelic-kubernetes-operator-system
+      path: /validate-nr-k8s-newrelic-com-v1-alertschannel
+  admissionReviewVersions: ["v1beta1"]
+  failurePolicy: Fail
+  name: valertschannel.kb.io
+  rules:
+  - apiGroups:
+    - nr.k8s.newrelic.com
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - alertschannels
+  sideEffects: None
+- clientConfig:
+    caBundle: Cg==
+    service:
+      name: newrelic-kubernetes-operator-webhook-service
+      namespace: newrelic-kubernetes-operator-system
+      path: /validate-nr-k8s-newrelic-com-v1-apmalertcondition
+  admissionReviewVersions: ["v1beta1"]
+  failurePolicy: Fail
+  name: vapmalertcondition.kb.io
+  rules:
+  - apiGroups:
+    - nr.k8s.newrelic.com
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - apmalertconditions
+  sideEffects: None
+- clientConfig:
+    caBundle: Cg==
+    service:
+      name: newrelic-kubernetes-operator-webhook-service
+      namespace: newrelic-kubernetes-operator-system
+      path: /validate-nr-k8s-newrelic-com-v1-nrqlalertcondition
+  admissionReviewVersions: ["v1beta1"]
+  failurePolicy: Fail
+  name: vnrqlalertcondition.kb.io
+  rules:
+  - apiGroups:
+    - nr.k8s.newrelic.com
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - nrqlalertconditions
+  sideEffects: None
+- clientConfig:
+    caBundle: Cg==
+    service:
+      name: newrelic-kubernetes-operator-webhook-service
+      namespace: newrelic-kubernetes-operator-system
+      path: /validate-nr-k8s-newrelic-com-v1-policy
+  admissionReviewVersions: ["v1beta1"]
+  failurePolicy: Fail
+  name: vpolicy.kb.io
+  rules:
+  - apiGroups:
+    - nr.k8s.newrelic.com
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - policies
+  sideEffects: None

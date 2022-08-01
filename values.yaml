@@ -1,0 +1,7 @@
+cert-manager:
+  enabled: true
+  startupapicheck:
+    timeout: 5m
+  namespace: cert-manager
+  installCRDs: true
+

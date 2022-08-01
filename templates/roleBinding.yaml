@@ -1,0 +1,14 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: newrelic-kubernetes-operator-leader-election-rolebinding
+  namespace: newrelic-kubernetes-operator-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: newrelic-kubernetes-operator-leader-election-role
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: newrelic-kubernetes-operator-system

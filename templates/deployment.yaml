@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    control-plane: controller-manager
+  name: newrelic-kubernetes-operator-controller-manager
+  namespace: newrelic-kubernetes-operator-system
+  annotations:
+    helm.sh/hook: post-install
+    helm.sh/hook-weight: "96"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      control-plane: controller-manager
+  template:
+    metadata:
+      labels:
+        control-plane: controller-manager
+    spec:
+      containers:
+      - args:
+        - --metrics-addr=127.0.0.1:8080
+        - --enable-leader-election
+        command:
+        - /manager
+        env:
+        - name: NEW_RELIC_LICENSE_KEY
+          valueFrom:
+            secretKeyRef:
+              key: license-key
+              name: nr-agent
+              optional: true
+        - name: NEW_RELIC_APP_NAME
+          valueFrom:
+            configMapKeyRef:
+              key: app-name
+              name: nr-agent
+              optional: true
+        - name: NEW_RELIC_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: host
+              name: nr-agent
+              optional: true
+        - name: NEW_RELIC_LOG
+          value: stdout
+        - name: NEW_RELIC_LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              key: log-level
+              name: nr-agent
+              optional: true
+        - name: NEW_RELIC_DISTRIBUTED_TRACING_ENABLED
+          value: "true"
+        image: newrelic/kubernetes-operator:v0.0.8
+        name: manager
+        ports:
+        - containerPort: 9443
+          name: webhook-server
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 100m
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 50Mi
+        volumeMounts:
+        - mountPath: /tmp/k8s-webhook-server/serving-certs
+          name: cert
+          readOnly: true
+      - args:
+        - --secure-listen-address=0.0.0.0:8443
+        - --upstream=http://127.0.0.1:8080/
+        - --logtostderr=true
+        - --v=10
+        image: gcr.io/kubebuilder/kube-rbac-proxy:v0.4.1
+        name: kube-rbac-proxy
+        ports:
+        - containerPort: 8443
+          name: https
+      terminationGracePeriodSeconds: 10
+      volumes:
+      - name: cert
+        secret:
+          defaultMode: 420
+          secretName: webhook-server-cert

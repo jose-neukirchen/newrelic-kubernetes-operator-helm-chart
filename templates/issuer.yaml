@@ -1,0 +1,11 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: newrelic-kubernetes-operator-selfsigned-issuer
+  namespace: newrelic-kubernetes-operator-system
+  annotations:
+    helm.sh/hook: post-install
+    helm.sh/hook-weight: "95"
+spec:
+  selfSigned: {}
