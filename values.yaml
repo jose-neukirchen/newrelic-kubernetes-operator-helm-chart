@@ -1,7 +1,9 @@
-cert-manager:
-  enabled: true
+certManager:
+# Set enabled to false if the cluster already has cert-manager installed
+  enabled: false
   startupapicheck:
     timeout: 5m
-  namespace: cert-manager
+# The "cert-manager" namespace has to exist prior to this chart installation,
+# the chart don't create a namespace for the cert-manager
+  # namespace: cert-manager
   installCRDs: true
-
