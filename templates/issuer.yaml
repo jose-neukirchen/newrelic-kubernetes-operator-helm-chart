@@ -6,6 +6,8 @@ metadata:
   namespace: newrelic-kubernetes-operator-system
   annotations:
     helm.sh/hook: post-install
-    helm.sh/hook-weight: "95"
+    helm.sh/hook-weight: "94"
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   selfSigned: {}

@@ -8,6 +8,8 @@ metadata:
   annotations:
     helm.sh/hook: post-install
     helm.sh/hook-weight: "96"
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   replicas: 1
   selector:

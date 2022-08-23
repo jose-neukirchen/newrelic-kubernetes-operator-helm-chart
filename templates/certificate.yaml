@@ -6,7 +6,9 @@ metadata:
   namespace: newrelic-kubernetes-operator-system
   annotations:
     helm.sh/hook: post-install
-    helm.sh/hook-weight: "94"
+    helm.sh/hook-weight: "95"
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   dnsNames:
   - newrelic-kubernetes-operator-webhook-service.newrelic-kubernetes-operator-system.svc
